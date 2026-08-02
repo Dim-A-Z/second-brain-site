@@ -14,3 +14,14 @@ For the MVP, reviewed public Markdown lives directly in this repository. Its str
 Astro performs static generation. There is no server adapter, database, backend, API, or additional UI framework. Leaflet provides the progressively enhanced route map; all route text remains available without JavaScript.
 
 Responsibilities remain small: content schemas enforce public data shape, Markdown owns content, route pages resolve ordered place references, components render route UI, and the map component receives only the public fields it needs.
+
+## Delivery
+
+```text
+GitHub repository
+    -> GitHub Actions
+    -> Astro static build
+    -> GitHub Pages
+```
+
+GitHub Pages is the initial hosting target and remains replaceable infrastructure. Markdown content and Astro presentation do not depend on GitHub Pages-specific APIs, and a future custom domain must not require content-model changes.

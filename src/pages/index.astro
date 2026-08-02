@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+
+const routeUrl = `${import.meta.env.BASE_URL}routes/moscow/arbat-architecture/`;
 ---
 
 <!doctype html>
@@ -17,7 +19,7 @@ import '../styles/global.css';
         <h1>Исследованные маршруты и заметки</h1>
         <p>Коллекция прогулок, собранных из открытых источников и полевых наблюдений.</p>
       </header>
-      <a class="route-card" href="/routes/moscow/arbat-architecture/">
+      <a class="route-card" href={routeUrl}>
         <span class="eyebrow">Москва · 9 остановок</span>
         <h2>От Арбата к первому вертикальному городу</h2>
         <p>Архитектурная прогулка от усадеб к доходным домам и сервисному жилью.</p>
