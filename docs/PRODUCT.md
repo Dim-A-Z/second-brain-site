@@ -2,6 +2,8 @@
 
 This repository contains a public, Markdown-first personal knowledge and publishing site.
 
+It is the author's personal public space rather than a travel-only product. Navigation exposes only destinations with published material; the current Home and Travel pages can expand when other real public work exists.
+
 ## MVP
 
 The first public content types are:

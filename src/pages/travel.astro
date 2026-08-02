@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import ContentCard from '../components/ContentCard.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { site } from '../config/site';
+import '../styles/global.css';
+
+const routes = await getCollection('routes');
+const baseUrl = import.meta.env.BASE_URL;
+const description = 'Маршруты, места и истории, собранные во время поездок и прогулок.';
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>Путешествия — {site.title}</title>
+  </head>
+  <body>
+    <SiteHeader currentPage="travel" />
+    <main class="landing-page">
+      <header class="landing-hero">
+        <p class="eyebrow">Раздел</p>
+        <h1>Путешествия</h1>
+        <p class="landing-description">{description}</p>
+      </header>
+
+      <section class="content-section" aria-labelledby="routes-title">
+        <div class="content-section-heading">
+          <div>
+            <p class="eyebrow">Маршруты</p>
+            <h2 id="routes-title">Готовые прогулки</h2>
+          </div>
+        </div>
+        <div class="content-grid">
+          {routes.map((route) => (
+            <ContentCard
+              typeLabel="Маршрут"
+              contextLabel={route.data.city === 'moscow' ? 'Москва' : route.data.city}
+              title={route.data.title}
+              description={route.data.description}
+              href={`${baseUrl}routes/${route.data.city}/${route.data.slug}/`}
+              actionLabel="Открыть маршрут →"
+            />
+          ))}
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+---
+interface Props {
+  typeLabel: string;
+  contextLabel: string;
+  title: string;
+  description: string;
+  href: string;
+  actionLabel: string;
+}
+
+const { typeLabel, contextLabel, title, description, href, actionLabel } = Astro.props;
+---
+
+<a class="content-card" href={href}>
+  <span class="eyebrow">{typeLabel} · {contextLabel}</span>
+  <h3>{title}</h3>
+  <p>{description}</p>
+  <strong>{actionLabel}</strong>
+</a>

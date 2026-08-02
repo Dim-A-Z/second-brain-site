@@ -15,6 +15,8 @@ Astro performs static generation. There is no server adapter, database, backend,
 
 Responsibilities remain small: content schemas enforce public data shape, Markdown owns content, route pages resolve ordered place references, components render route UI, and the map component receives only the public fields it needs.
 
+Site-wide public identity and social links live in a small presentation configuration module, while a shared header owns base-aware Home and Travel navigation. Travel is a derived landing page over the existing Route collection, not a new content type; Route Markdown remains the source for titles, descriptions, and canonical route URLs.
+
 ## Delivery
 
 ```text

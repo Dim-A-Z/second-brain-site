@@ -1,0 +1,23 @@
+---
+import { site } from '../config/site';
+
+interface Props {
+  currentPage: 'home' | 'travel';
+}
+
+const { currentPage } = Astro.props;
+const homeUrl = import.meta.env.BASE_URL;
+const navigation = [
+  { id: 'home', label: 'Главная', href: homeUrl },
+  { id: 'travel', label: 'Путешествия', href: `${homeUrl}travel/` },
+] as const;
+---
+
+<header class="site-header">
+  <a class="site-brand" href={homeUrl}>{site.title}</a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    {navigation.map((item) => (
+      <a href={item.href} aria-current={currentPage === item.id ? 'page' : undefined}>{item.label}</a>
+    ))}
+  </nav>
+</header>
