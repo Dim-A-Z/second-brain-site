@@ -1,11 +1,11 @@
 ## ADDED Requirements
 
 ### Requirement: Public site identity
-The site SHALL present `Dim_A_Z log` as its public title and SHALL present the exact accepted public description without rendering the previous placeholder.
+The site SHALL present `DimAZ Log` as its public title and SHALL present the exact accepted public description without rendering the previous placeholder.
 
 #### Scenario: Home identity is rendered
 - **WHEN** the home page is built
-- **THEN** it displays `Dim_A_Z log` and `Про жизнь, в которой есть работа, путешествия, книги, спорт и интерес к новому. Личный опыт, наблюдения и эксперименты.`
+- **THEN** it displays `DimAZ Log` and `Про жизнь, в которой есть работа, путешествия, книги, спорт и интерес к новому. Личный опыт, наблюдения и эксперименты.`
 
 #### Scenario: Placeholder is excluded
 - **WHEN** public source and generated pages are inspected

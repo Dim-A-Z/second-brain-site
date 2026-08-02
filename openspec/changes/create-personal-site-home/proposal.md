@@ -4,7 +4,7 @@ The deployed site currently presents one route as if it were the site's entire i
 
 ## What Changes
 
-- Establish `Dim_A_Z log` and the accepted public description as shared site identity.
+- Establish `DimAZ Log` and the accepted public description as shared site identity.
 - Add restrained, reusable navigation containing only Home and Travel.
 - Rework the home page into a personal landing page with public social links and the existing Arbat route as the current latest material.
 - Add a `/travel/` landing page that lists the existing Route content without moving or duplicating it.
