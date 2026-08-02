@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  duration: string;
+  distance: string;
+}
+
+const { title, description, duration, distance } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main>
+      <header class="route-hero">
+        <a class="home-link" href="/">Исследованные маршруты</a>
+        <p class="eyebrow">Москва · архитектурная прогулка</p>
+        <h1>{title}</h1>
+        <p class="route-thesis">{description}</p>
+        <div class="route-facts"><span>{duration}</span><span>{distance}</span><span>9 остановок</span></div>
+      </header>
+      <slot />
+    </main>
+    <footer><p>Полевой маршрут, собранный из открытых источников. Перед посещением проверяйте актуальный режим доступа.</p></footer>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  source?: { title: string; url: string };
+}
+
+const { title, text, source } = Astro.props;
+---
+
+<aside class="route-interlude">
+  <p class="eyebrow">Между точками</p>
+  <h2>{title}</h2>
+  <p>{text}</p>
+  {source && <a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a>}
+</aside>

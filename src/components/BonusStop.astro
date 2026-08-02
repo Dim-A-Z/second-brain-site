@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  address: string;
+  text: string;
+}
+
+const { title, address, text } = Astro.props;
+---
+
+<aside class="bonus-stop">
+  <span class="bonus-star" aria-hidden="true">★</span>
+  <div>
+    <p class="eyebrow">Бонусная остановка</p>
+    <h3>{title}</h3>
+    <p class="bonus-address">{address}</p>
+    <p>{text}</p>
+  </div>
+</aside>

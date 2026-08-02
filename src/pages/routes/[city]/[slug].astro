@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import RouteLayout from '../../../layouts/RouteLayout.astro';
+import RouteMap from '../../../components/RouteMap.astro';
+import RouteStop from '../../../components/RouteStop.astro';
+import RouteInterlude from '../../../components/RouteInterlude.astro';
+import BonusStop from '../../../components/BonusStop.astro';
+
+export async function getStaticPaths() {
+  const [routes, places] = await Promise.all([getCollection('routes'), getCollection('places')]);
+  const placesBySlug = new Map(places.map((place) => [place.data.slug, place]));
+
+  return routes.map((route) => {
+    const routePlaces = route.data.places.map((slug) => {
+      const place = placesBySlug.get(slug);
+      if (!place) throw new Error(`Route "${route.data.slug}" references missing place "${slug}".`);
+      return place;
+    });
+    return {
+      params: { city: route.data.city, slug: route.data.slug },
+      props: { route, routePlaces },
+    };
+  });
+}
+
+const { route, routePlaces } = Astro.props;
+const { Content } = await render(route);
+const mapStops = routePlaces.map((place, index) => ({
+  order: index + 1,
+  title: place.data.title,
+  address: place.data.address,
+  latitude: place.data.latitude,
+  longitude: place.data.longitude,
+  anchor: `stop-${index + 1}`,
+}));
+const bonusMapStops = (route.data.bonusStops ?? []).flatMap((stop) =>
+  stop.latitude !== undefined && stop.longitude !== undefined
+    ? [{ title: stop.title, address: stop.address, latitude: stop.latitude, longitude: stop.longitude }]
+    : [],
+);
+---
+
+<RouteLayout {...route.data}>
+  <section class="route-intro prose"><Content /></section>
+  <RouteMap stops={mapStops} bonusStops={bonusMapStops} />
+  <nav class="stop-nav" aria-label="Остановки маршрута">
+    {routePlaces.map((place, index) => <a href={`#stop-${index + 1}`}><span>{index + 1}</span>{place.data.title}</a>)}
+  </nav>
+  <section class="stops" aria-label="Остановки">
+    {routePlaces.map((place, index) => (
+      <>
+        <RouteStop order={index + 1} place={place} />
+        {(route.data.bonusStops ?? []).filter((stop) => stop.after === place.data.slug).map((stop) => <BonusStop {...stop} />)}
+        {(route.data.interludes ?? []).filter((interlude) => interlude.after === place.data.slug).map((interlude) => <RouteInterlude {...interlude} />)}
+      </>
+    ))}
+  </section>
+</RouteLayout>

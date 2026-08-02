@@ -1,0 +1,70 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  order: number;
+  place: CollectionEntry<'places'>;
+}
+
+const { order, place } = Astro.props;
+const { Content } = await render(place);
+const accessLabels = { outside: 'снаружи', open: 'можно внутрь', limited: 'ограниченный доступ' };
+const thenNowLabels = { exact: 'точный повтор', approximate: 'приблизительный повтор', context: 'контекст' };
+---
+
+<article class="route-stop" id={`stop-${order}`}>
+  <header class="stop-header">
+    <span class="stop-number" aria-hidden="true">{order}</span>
+    <div>
+      <p class="eyebrow">Остановка {order}</p>
+      <h2>{place.data.title}</h2>
+      <p class="stop-meta">{place.data.address} · {place.data.period} · {place.data.architect}</p>
+    </div>
+  </header>
+  <p class="stop-summary">{place.data.summary}</p>
+
+  <div class="field-grid">
+    <section class="field-card">
+      <h3>Доступ <span class={`badge badge-${place.data.access.status}`}>{accessLabels[place.data.access.status]}</span></h3>
+      <p>{place.data.access.text}</p>
+      {place.data.access.url && <a href={place.data.access.url} target="_blank" rel="noreferrer">Проверить посещение ↗</a>}
+    </section>
+    <section class="field-card">
+      <h3>Тогда / Сейчас <span class={`badge badge-${place.data.thenNow.status}`}>{thenNowLabels[place.data.thenNow.status]}</span></h3>
+      <p>{place.data.thenNow.text}</p>
+      <p><strong>Как повторить:</strong> {place.data.thenNow.repeatInstructions}</p>
+      {place.data.thenNow.historicalSourceUrl && <a href={place.data.thenNow.historicalSourceUrl} target="_blank" rel="noreferrer">Открыть исторический материал ↗</a>}
+    </section>
+  </div>
+
+  <section class="history-section prose"><Content /></section>
+
+  <div class="secondary-details">
+    {place.data.lookFor && (
+      <details>
+        <summary>Что искать глазами</summary>
+        <p>{place.data.lookFor}</p>
+      </details>
+    )}
+    {place.data.photography && (
+      <details>
+        <summary>Как можно снять</summary>
+        <p>{place.data.photography}</p>
+      </details>
+    )}
+  </div>
+
+  {place.data.sources?.length && (
+    <section class="source-list" aria-label="Источники">
+      <h3>Источники</h3>
+      <ul>{place.data.sources.map((source) => <li><a href={source.url} target="_blank" rel="noreferrer">{source.title} ↗</a></li>)}</ul>
+    </section>
+  )}
+
+  {place.data.publications?.length && (
+    <section class="publication-list" aria-label="Публикации">
+      <h3>Публикации</h3>
+      <ul>{place.data.publications.map((item) => <li><span>{item.type}</span> <a href={item.url}>{item.title}</a></li>)}</ul>
+    </section>
+  )}
+</article>
